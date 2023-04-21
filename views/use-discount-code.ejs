@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+  
+    form {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      max-width: 400px;
+      width: 100%;
+    }
+  
+    input,
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px 0px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  
+    button {
+      background-color: #9aa61f;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+  
+    button:hover {
+      background-color: #8c9523;
+    }
+  
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+  
+    p {
+      color: red;
+    }
+  
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: none;
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(154, 166, 31, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: none;
+      }
+    }
+  
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+    }
+  </style>
+  
+  
+  <title>Use Discount Code</title>
+</head>
+<body>
+  <form id="discount-form">
+    <h1>Use Discount Code </h1>
+    <label for="email">Email:</label>
+    <input type="email" name="email" required>
+    <br>
+    <label for="discountCode">Discount Code:</label>
+    <input type="text" name="discountCode" required>
+    <br>
+    <label for="orderNumber">Order Number:</label>
+    <input type="text" name="orderNumber" required>
+    <br>
+    <button type="submit">Submit</button>
+  </form>
+  <% if (message) { %>
+    <p><%= message %></p>
+  <% } %>
+
+  <script>
+    document.getElementById("discount-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+  
+      // Get form values
+      const email = event.target.email.value;
+      const discountCode = event.target.discountCode.value;
+      const orderNumber = event.target.orderNumber.value;
+  
+      // Create POST request
+      const response = await fetch("/api/use-discount-code", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, discountCode, orderNumber })
+      });
+  
+      // Handle the response
+      const result = await response.json();
+      console.log(result);
+      // Add the result message to the DOM, or handle it as needed
+  
+      // Reload the current page
+      location.reload();
+    });
+  </script>
+</body>
+</html>
