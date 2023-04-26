@@ -1,0 +1,29 @@
+This code is a Node.js application that uses the Express framework to create a server. It connects to a MongoDB database and fetches contacts from an external API (Omnisend) using axios. The application saves new contacts to the database and sends a POST request with the contact's email, discount code, and discount link. It also schedules a cron job to run every minute to fetch contacts and perform the aforementioned tasks.
+
+Here's a breakdown of the code:
+
+1. Import required modules and set up the Express app.
+2. Set the view engine to EJS and set the views directory.
+3. Add middleware for handling JSON data, CORS, and logging.
+4. Connect to the MongoDB database using the connection string from the environment variables.
+5. Define the `generateDiscountCode` function to create a random discount code.
+6. Define the `saveEmailsToDatabase` function to save new emails to the database, generate discount codes, and send POST requests with the email, discount code, and discount link.
+7. Set up a cron job to run every minute, fetch contacts from the Omnisend API, and call the `saveEmailsToDatabase` function with the fetched emails.
+8. Add the discount route to the Express app.
+9. Define the `logRoutes` function to log the routes in the application.
+10. Call the `logRoutes` function to log the routes.
+11. Start the Express server on the specified port.
+
+The application uses the `dotenv` module to load environment variables from a `.env` file. It also uses the `mongoose` module to interact with the MongoDB database and the `body-parser`, `morgan`, and `cors` middleware for handling JSON data, logging, and Cross-Origin Resource Sharing (CORS) respectively.
+
+The `Subscriber` model is imported from the `./subscriber` file, which represents the schema for storing subscriber data in the MongoDB database.
+
+The `discountRoute` is imported from the `./routes/discount` file, which contains the API routes related to discounts.
+
+The `path` module is used to join the directory path for the views folder.
+
+The cron job fetches contacts from the Omnisend API using the `axios` module and the provided API key. It then processes the contacts, saves new emails to the database, generates discount codes, and sends POST requests with the email, discount code, and discount link. The cron job is scheduled to run every minute.
+
+The `logRoutes` function logs the routes in the application, which can be helpful for debugging and understanding the application's structure.
+
+Finally, the Express server is started on the specified port (either from the environment variable `PORT` or the default value 3000), and a message is logged to the console indicating that the server is listening on the specified port.
