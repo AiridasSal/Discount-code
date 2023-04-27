@@ -57,7 +57,7 @@ async function saveEmailsToDatabase(emails) {
       // Send POST request for each newly added email
       const postPromises = newEmails.map(async (emailObj) => {
         try {
-          await axios.post('https://prod-09.westeurope.logic.azure.com:443/workflows/fd2b38177f09407d9d28459883a2b968/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=qqgrmqkVfwfbKBxsAnuybWq3cwSSVRoMZddX07RmE68', {
+          await axios.post(process.env.POWER_AUTOMATE, {
             email: emailObj.email,
             discountCode: emailObj.discountCode,
             discountLink: emailObj.discountLink
@@ -86,7 +86,7 @@ cron.schedule('* * * * *', () => {
     url: 'https://api.omnisend.com/v3/contacts?limit=250',
     headers: {
       accept: 'application/json',
-      'X-API-KEY': '63d917859409de13a77b02e7-zGFTxiiLVfvoZPsfaKDjoihawW4fBq72j7MqSkRh2p2ksClxDy'
+      'X-API-KEY': process.env.OMNISEND_API_KEY
     }
   };
 
